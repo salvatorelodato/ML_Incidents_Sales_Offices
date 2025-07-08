@@ -90,6 +90,7 @@ The final model helps detect risk patterns and can be used to support operationa
 
 ## Repository Structure
 
+```bash
 ├── src/                # Source directory containing all code components
 │   ├── data_sample/    # Sample dataset files used to run the project
 │   ├── img/            # Images and plots used in the project
