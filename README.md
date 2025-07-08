@@ -38,6 +38,7 @@ El modelo final ayuda a detectar patrones de riesgo y puede ser usado para tomar
 
 Estructura del repositorio
 
+```bash
 ── src/                # El directorio source que debe contener al resto de carpetas
     ├── data_sample/    # Los archivos de datos de muestra utilizados en el proyecto que permitan ejecutar el código
     ├── img/            # Las imágenes que hayas utilizado para tu proyecto
