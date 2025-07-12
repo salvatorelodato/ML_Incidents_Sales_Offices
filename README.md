@@ -1,104 +1,146 @@
 ```bash
-SPANISH 
-# ML_Incidents_Sales_Offices
-Proyecto de Machine Learning para predecir incidentes con clientes agresivos en oficinas bancarias.
+# Proyecto de Machine Learning: Predicción de Incidentes en Oficinas Bancarias
 
-**ESPAÑOL:**  
-El objetivo de este proyecto es desarrollar un modelo de Machine Learning que permita predecir si ocurrirá una incidencia con un cliente agresivo en una oficina bancaria. Esto permitirá a los departamentos de seguridad y operaciones anticiparse a eventos conflictivos y optimizar recursos como personal o medidas preventivas en días u horarios críticos.
+## Problema que se quiere resolver
 
-## Dataset utilizado 
+El objetivo de este proyecto es desarrollar un modelo de Machine Learning capaz de predecir si en una oficina bancaria ocurrirá un incidente con un cliente agresivo (verbal o físico). Esto permitirá a los equipos de seguridad anticipar escenarios conflictivos y asignar recursos como vigilantes, refuerzos o medidas disuasorias de forma más eficaz.
 
-- **Tipo:** Dataset extraido, modificado y limpiado para cuidar los datos personales, de incidentes en oficinas bancarias.
-- **Período:** 2021 a 2025
-- **Tamaño:** 1187 registros
-- **Variables principales:**
-  - `fecha_hora`: fecha y hora del incidente registrado
-  - `oficina`: sucursal donde ocurrió
-  - `aforo`: ocupación de la oficina (bajo, medio, alto)
-  - `turno`: mañana o tarde (se considera el periodo hasta las 14:00 mañana y en adelante tarde)
-  - `agresion_fisica`: 0/1 (0:No, 1:Si)
-  - `agresion_verbal`: 0/1 (0:No, 1:Si)
-  - `llamada_policia`: 0/1  (0:No, 1:Si)
-  - `incidente_agresivo`: variable objetivo (target) (Se considera cualquier agresion)
+## Dataset empleado
 
-El dataset completo es **privado**, pero se incluye una muestra representativa en la carpeta [`/src/data_sample`] para poder ejecutar el proyecto.
+El dataset utilizado es de caracter privado, combina datos de bases de datos (Herramienta de Ticketing desarrollada para almacenaje de datos) reales, se limpió el fichero antes de la extracción eliminando datos personales como Nombre, Apellido, Testigos, DNIs, NIE, CIF y cualquier elemento de caracter personal, para no comprometer información confidencial.
 
-## Solución adoptada / Adopted Solution
+- **Tamaño total:** 1.696 registros
+- **Variable target:** `agresion_fisica_verbal`  (1 = Sí, 0 = No)
 
-Se utiliza un enfoque de aprendizaje supervisado para predecir la variable `incidente_agresivo` utilizando modelos de clasificación.
+### Columnas del dataset
 
-Se ha desarrollado un modelo de clasificación supervisada para predecir si un incidente podría ser agresivo.  
-El cual incluye :
+```python
+columnas_dataset = [
+    "id_incidente",                # ID único asignado a cada incidente ticket dentro de la petición.
+    "fecha_incidente",             # Fecha en la que ocurrió el incidente.
+    "hora_incidente",              # Hora aproximada en la que ocurrió el incidente.
+    "id_oficina",                  # Identificador único de cada oficina bancaria.
+    "ciudad_oficina",              # Ciudad donde se ubica la oficina.
+    "llamada_fcs",                 # 1 = Sí, 0 = No. Si se realizó llamada a las Fuerzas y Cuerpos de Seguridad.
+    "dia_mes",                     # Día del mes en el que ocurrió el incidente (1 a 31).
+    "aforo_alto",                  # 1 = Sí, 0 = No. Indica si había un alto aforo en el momento del incidente.
+    "ocupacion_categoria",        # Categoría percibida de ocupación de la oficina ('bajo', 'medio', 'alto').
+    "franja_horaria",             # Franja del día en que ocurrió el incidente ('manana' o 'tarde').
+    "servicio_vigilante",         # 1 = Sí, 0 = No. Si la oficina contaba con vigilante ese día.
+    "ccaa_videoportero",          # 1 = Sí, 0 = No. Si se usó control de acceso con videoportero.
+    "fraude_detectado",           # Número de operaciones canceladas por posible fraude ese día.
+    "seguimiento_procedimiento_seg",  # 1 = Sí, 0 = No. Si se siguieron procedimientos de seguridad/mitigación.
+]
+```
+Este dataset es **privado**, pero se incluye una muestra **pública** en el directorio `/src/data_sample/` para fines de evaluación.
 
-1. Análisis exploratorio de los datos (EDA)
-2. Preprocesamiento y codificación de variables
-3. Entrenamiento de varios modelos base
-4. Evaluación final con métricas como recall, precisión  y matriz de confusión
+## 🧪 Solución adoptada
 
-El modelo final ayuda a detectar patrones de riesgo y puede ser usado para tomar decisiones operativas en oficinas.
+Se ha implementado un flujo completo de machine learning:
 
-Estructura del repositorio
+1. **Preprocesamiento** de datos y análisis exploratorio.
+2. **Ingeniería de variables** para codificar categorías y escalar valores.
+3. **Entrenamiento** de modelos base como Regresión Logística y Random Forest.
+4. **Ajuste de hiperparámetros** mediante validación cruzada.
+5. **Evaluación final** con métricas como recall y matriz de confusión.
+6. **Exportación del modelo** entrenado en formato `.joblib`.
 
-```bash
-── src/                # El directorio source que debe contener al resto de carpetas
-    ├── data_sample/    # Los archivos de datos de muestra utilizados en el proyecto que permitan ejecutar el código
-    ├── img/            # Las imágenes que hayas utilizado para tu proyecto
-    ├── models/         # Los modelos guardados al ejecutar el código del proyecto en formato pickle o joblib (a elegir)
-    ├── notebooks/      # Los notebooks usados para pruebas
-    ├── utils/          # Todos los modulos, funciones auxiliares o clases creadas para el desarrollo del proyecto
-├── main.ipynb          # El notebook final del proyecto: claro, conciso, y bien estructurado con el paso a paso del proceso
-├── presentacion.pdf    # El documento soporte que utilices como apoyo a la exposición de resultados en vídeo
-├── README.md           # El fichero README resumen del proyecto
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-ENGLISH
+## 📂 Estructura de directorios
 
- ML_Incidents_Sales_Offices  
-Machine Learning project to predict aggressive customer incidents in bank branches.
+```
+ML_Incidents_Sales_Offices
+├── README.md
+├── main.ipynb
+├── src/
+│   ├── data_sample/
+│   │   └── sample_dataset.csv
+│   ├── models/
+│   │   └── modelo_final.joblib
+│   └── figures/
+│       └── grafico_evaluacion.png
+└── docs/
+    └── presentacion_proyecto.pdf
+```
 
-**ENGLISH:**  
-The goal of this project is to develop a Machine Learning model capable of predicting whether an aggressive customer incident will occur in a bank branch. This will allow security and operations departments to anticipate conflictive events and optimize resources such as staff allocation or preventive measures during critical days or hours.
+**Notas:**
 
-## Dataset used
+- El notebook `main.ipynb` contiene todo el flujo desde carga de datos hasta evaluación y exportación.
+- El directorio `src/data_sample` incluye un subset del dataset original.
+- `src/models` contiene el modelo exportado.
+- `docs` contiene la presentación final en PDF.
 
-- **Type:** Dataset extracted, modified, and cleaned to protect personal information related to incidents in bank branches.
-- **Period:** 2021 to 2025
-- **Size:** 1,187 records
-- **Main variables:**
-  
-  - `fecha_hora`: date and time when the incident was recorded
-  - `oficina`: the branch where the incident occurred
-  - `aforo`: branch occupancy level (low, medium, high)
-  - `turno`: shift (morning or afternoon — morning is until 14:00, and afternoon starts afterward)
-  - `agresion_fisica`: 0/1 (0: No, 1: Yes)
-  - `agresion_verbal`: 0/1 (0: No, 1: Yes)
-  - `llamada_policia`: 0/1 (0: No, 1: Yes)
-  - `incidente_agresivo`: target variable (any type of aggression)
+---
 
-The full dataset is **private**, but a representative sample is included in the [`/src/data_sample`] folder to allow project execution.
+# Predicting Customer Incidents in Bank Branches (ENGLISH VERSION)
 
-## Adopted Solution
+## 🔎 Problem Statement
 
-A supervised learning approach was used to predict the `incidente_agresivo` variable using classification models.
+The goal of this project is to develop a Machine Learning model to predict whether an incident involving an aggressive customer (verbal or physical) will occur in a bank branch. This prediction helps security and operations teams to better anticipate conflicts and allocate resources more effectively.
 
-A supervised classification model was developed to predict whether an incident may be aggressive.  
-The process includes:
+## 📊 Dataset Used
 
-1. Exploratory Data Analysis (EDA)
-2. Preprocessing and feature encoding
-3. Training several baseline models
-4. Final evaluation using metrics such as recall, precision, and confusion matrix
+The data set used is of a private nature, it combines data real databases (Ticketing Tool developed for data storage data base). The file was cleaned before extraction by eliminating personal data such as Name, Surname, Witnesses, DNIs, NIE, CIF and any element of a personal nature, to mantain secure the confidential information.
 
-The final model helps detect risk patterns and can be used to support operational decision-making at bank branches.
+- **Total size:** 1,696 records
+- **Target variable:** `agresion_fisica_verbal`  (1 = Yes, 0 = No)
 
-## Repository Structure
+### Dataset columns
 
-```bash
-├── src/                # Source directory containing all code components
-│   ├── data_sample/    # Sample dataset files used to run the project
-│   ├── img/            # Images and plots used in the project
-│   ├── models/         # Trained models saved as pickle or joblib files
-│   ├── notebooks/      # Notebooks used for experimentation
-│   ├── utils/          # Helper functions, modules, or classes for project development
-├── main.ipynb          # Final notebook with the full, well-structured pipeline
-├── presentacion.pdf    # Slide deck or visual support used during video presentation
-├── README.md           # This README file summarizing the project
+```python
+columnas_dataset = [
+    "id_incidente",                # Unique ID assigned to each incident ticket within the request.
+    "fecha_incidente",             # Date on which the incident occurred.
+    "hora_incidente",              # Approximate time when the incident occurred.
+    "id_oficina",                  # Unique identifier for each bank branch.
+    "ciudad_oficina",              # City where the branch is located.
+    "llamada_fcs",                 # 1 = Yes, 0 = No. Whether law enforcement was called.
+    "dia_mes",                     # Day of the month when the incident occurred (1 to 31).
+    "aforo_alto",                  # 1 = Yes, 0 = No. Indicates if there was high occupancy at the time.
+    "ocupacion_categoria",        # Perceived occupancy category of the branch ('low', 'medium', 'high').
+    "franja_horaria",             # Time slot of the day when the incident occurred ('morning' or 'afternoon').
+    "servicio_vigilante",         # 1 = Yes, 0 = No. Whether the branch had a security guard that day.
+    "ccaa_videoportero",          # 1 = Yes, 0 = No. Whether access control via video intercom was used.
+    "fraude_detectado",           # Number of operations canceled due to suspected fraud that day.
+    "seguimiento_procedimiento_seg",  # 1 = Yes, 0 = No. Whether security/mitigation procedures were followed.
+]
+```
+
+The dataset is **private**, but a **public sample** is included in `/src/data_sample/` for evaluation purposes.
+
+## 🧪 Adopted Solution
+
+A full machine learning pipeline was implemented:
+
+1. **Data preprocessing** and exploratory data analysis.
+2. **Feature engineering** to encode categories and scale values.
+3. **Training** of baseline models such as Logistic Regression and Random Forest.
+4. **Hyperparameter tuning** via cross-validation.
+5. **Final evaluation** using metrics like recall and confusion matrix.
+6. **Model export** in `.joblib` format.
+
+## 📂 Repository Structure
+
+```plaintext
+ML_Incidents_Sales_Offices
+├── README.md
+├── main.ipynb
+├── src/
+│   ├── data_sample/
+│   │   └── sample_dataset.csv
+│   ├── models/
+│   │   └── modelo_final.joblib
+│   └── figures/
+│       └── grafico_evaluacion.png
+└── docs/
+    └── presentacion_proyecto.pdf
+```
+
+**Notes:**
+
+- The `main.ipynb` notebook contains the full pipeline from data loading to model evaluation and export.
+- The `src/data_sample` directory includes a subset of the original dataset.
+- `src/models` contains the exported model.
+- `docs` contains the final presentation in PDF format.
+
+
+
