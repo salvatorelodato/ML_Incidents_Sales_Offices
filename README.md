@@ -14,7 +14,7 @@ El dataset utilizado es de caracter privado, combina datos de bases de datos (He
 
 ### Columnas del dataset
 
-```python
+```
 columnas_dataset = [
     "id_incidente",                # ID único asignado a cada incidente ticket dentro de la petición.
     "fecha_incidente",             # Fecha en la que ocurrió el incidente.
@@ -86,7 +86,7 @@ The data set used is of a private nature, it combines data real databases (Ticke
 
 ### Dataset columns
 
-```python
+```
 columnas_dataset = [
     "id_incidente",                # Unique ID assigned to each incident ticket within the request.
     "fecha_incidente",             # Date on which the incident occurred.
