@@ -34,7 +34,7 @@ columnas_dataset = [
 ```
 Este dataset es **privado**, pero se incluye una muestra **pública** en el directorio `/src/data_sample/` para fines de evaluación.
 
-## 🧪 Solución adoptada
+## Solución adoptada
 
 Se ha implementado un flujo completo de machine learning:
 
@@ -45,7 +45,7 @@ Se ha implementado un flujo completo de machine learning:
 5. **Evaluación final** con métricas como recall y matriz de confusión.
 6. **Exportación del modelo** entrenado en formato `.joblib`.
 
-## 📂 Estructura de directorios
+## Estructura de directorios
 
 ```
 ML_Incidents_Sales_Offices
@@ -73,11 +73,11 @@ ML_Incidents_Sales_Offices
 
 # Predicting Customer Incidents in Bank Branches (ENGLISH VERSION)
 
-## 🔎 Problem Statement
+##  Problem Statement
 
 The goal of this project is to develop a Machine Learning model to predict whether an incident involving an aggressive customer (verbal or physical) will occur in a bank branch. This prediction helps security and operations teams to better anticipate conflicts and allocate resources more effectively.
 
-## 📊 Dataset Used
+## Dataset Used
 
 The data set used is of a private nature, it combines data real databases (Ticketing Tool developed for data storage data base). The file was cleaned before extraction by eliminating personal data such as Name, Surname, Witnesses, DNIs, NIE, CIF and any element of a personal nature, to mantain secure the confidential information.
 
@@ -85,7 +85,7 @@ The data set used is of a private nature, it combines data real databases (Ticke
 - **Target variable:** `agresion_fisica_verbal`  (1 = Yes, 0 = No)
 
 ### Dataset columns
-```python
+```dataset
 columnas_dataset = [
     "id_incidente",                # Unique ID assigned to each incident ticket within the request.
     "fecha_incidente",             # Date on which the incident occurred.
@@ -106,7 +106,7 @@ columnas_dataset = [
 
 The dataset is **private**, but a **public sample** is included in `/src/data_sample/` for evaluation purposes.
 
-## 🧪 Adopted Solution
+##  Adopted Solution
 
 A full machine learning pipeline was implemented:
 
@@ -117,9 +117,9 @@ A full machine learning pipeline was implemented:
 5. **Final evaluation** using metrics like recall and confusion matrix.
 6. **Model export** in `.joblib` format.
 
-## 📂 Repository Structure
+## Repository Structure
 
-```plaintext
+```structure
 ML_Incidents_Sales_Offices
 ├── README.md
 ├── main.ipynb
